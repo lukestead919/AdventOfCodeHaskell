@@ -1,0 +1,8 @@
+.stack-work/
+*~
+# Project exclude paths
+/out/
+
+input.txt
+/.idea/
+/dist-newstyle/
