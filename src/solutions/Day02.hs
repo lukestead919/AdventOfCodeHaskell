@@ -9,9 +9,6 @@ toNumericValue x
   | x `elem` ['B', 'Y'] = 2
   | x `elem` ['C', 'Z'] = 3
   | otherwise = error ("missing numeric value score " ++ [x])
-  
-leftMod :: Int -> Int -> Int
-leftMod = flip mod
 
 outcomeScore :: String -> Int
 outcomeScore x = case t of
@@ -20,7 +17,7 @@ outcomeScore x = case t of
   2 -> 6
   _ -> error ("missing outcome score " ++ show t)
   where
-    t = leftMod 3 (toNumericValue (head x) - toNumericValue (last x))
+    t = (toNumericValue (head x) - toNumericValue (last x)) `mod` 3
 
 part1 :: String -> Int
 part1 =
@@ -34,7 +31,7 @@ calcShapeScore x =
         'Y' -> 0
         'Z' -> 1
         _ -> error ("missing shape score " ++ [z])
-   in leftMod 3 (toNumericValue (head x) + outcomeModifier (last x) - 1) + 1
+   in (toNumericValue (head x) + outcomeModifier (last x) - 1) `mod` 3 + 1
 
 outcomeScore' :: Char -> Int
 outcomeScore' x = case x of
