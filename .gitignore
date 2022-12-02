@@ -3,7 +3,7 @@
 # Project exclude paths
 /out/
 
-input.txt
+inputs
 /.idea/
 /dist-newstyle/
 /CHANGELOG.md

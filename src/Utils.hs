@@ -4,9 +4,9 @@ module Utils
 
 import System.IO
 
-solve :: (Show ans) => String -> (String -> ans) -> (String -> ans) -> IO ()
+solve :: (Show ans1, Show ans2) => String -> (String -> ans1) -> (String -> ans2) -> IO ()
 solve q p1 p2 = do
-    let inputFile = "src/day" ++ q ++ "/input.txt"
+    let inputFile = "src/inputs/Day" ++ q ++ ".txt"
     handle <- openFile inputFile ReadMode
     contents <- hGetContents handle
     putStrLn ("Part 1: " ++ show (p1 contents))
