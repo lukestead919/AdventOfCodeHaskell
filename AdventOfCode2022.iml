@@ -16,5 +16,6 @@
     <orderEntry type="library" name="ghc-bignum-1.2" level="project" />
     <orderEntry type="library" name="ghc-prim-0.8.0" level="project" />
     <orderEntry type="library" name="split-0.2.3.5" level="project" />
+    <orderEntry type="library" name="timeit-2.0" level="project" />
   </component>
 </module>
