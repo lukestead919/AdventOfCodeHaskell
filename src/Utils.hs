@@ -1,6 +1,7 @@
 module Utils
   ( solve,
-  sumBy
+    sumBy,
+    toPair,
   )
 where
 
@@ -22,3 +23,7 @@ solve q p1 p2 = do
 
 sumBy :: Num a => (b -> a) -> [b] -> a
 sumBy f = sum . map f
+
+toPair :: [a] -> (a, a)
+toPair [x, y] = (x, y)
+toPair _ = error "not a pair"
