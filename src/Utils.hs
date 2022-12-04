@@ -1,5 +1,6 @@
 module Utils
   ( solve,
+  sumBy
   )
 where
 
@@ -18,3 +19,6 @@ solve q p1 p2 = do
     )
 
   hClose handle
+
+sumBy :: Num a => (b -> a) -> [b] -> a
+sumBy f = sum . map f

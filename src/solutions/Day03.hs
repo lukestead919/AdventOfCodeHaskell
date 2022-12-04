@@ -24,12 +24,12 @@ charValue x =
 part1 :: String -> Int
 part1 =
   let score = charValue . head . intersectStrings . half
-   in sum . map score . parseInput
+   in sumBy score . parseInput
 
 part2 :: String -> Int
 part2 =
   let score = charValue . head . foldr1 intersect
-   in sum . map score . chunksOf 3 . parseInput
+   in sumBy score . chunksOf 3 . parseInput
 
 main :: IO ()
 main = solve "03" part1 part2
