@@ -2,9 +2,12 @@ module Utils
   ( solve,
     sumBy,
     toPair,
+    replace,
+    trim,
   )
 where
 
+import Data.Char (isSpace)
 import System.IO
 import System.TimeIt
 
@@ -27,3 +30,11 @@ sumBy f = sum . map f
 toPair :: [a] -> (a, a)
 toPair [x, y] = (x, y)
 toPair _ = error "not a pair"
+
+replace :: Int -> a -> [a] -> [a]
+replace i e xs = case splitAt i xs of
+  (before, _ : after) -> before ++ e : after
+  _ -> xs
+
+trim :: String -> String
+trim = takeWhile (not . isSpace) . dropWhile isSpace
