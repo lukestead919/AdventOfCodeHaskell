@@ -4,10 +4,14 @@ module Utils
     toPair,
     replace,
     trim,
+    windows
   )
 where
-
+  
+import Control.Applicative
+import Data.Traversable()
 import Data.Char (isSpace)
+import Data.List (tails, transpose)
 import System.IO
 import System.TimeIt
 
@@ -38,3 +42,6 @@ replace i e xs = case splitAt i xs of
 
 trim :: String -> String
 trim = takeWhile (not . isSpace) . dropWhile isSpace
+
+windows :: Int -> [a] -> [[a]]
+windows m = transpose . take m . tails
