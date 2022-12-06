@@ -11,10 +11,10 @@ parseInstruction :: String -> Instruction
 parseInstruction = (\xs -> (read (xs !! 1), read (xs !! 3), read (xs !! 5))) . words
 
 parseCrates :: [String] -> Crates
-parseCrates = let sanitizeCrate = reverse . trim . init
-                  findCrate num = fmap sanitizeCrate . find (\crate -> last crate == num)
-                  findCrates x = map (fromMaybe "" . (`findCrate` x)) ['0'..'9'] -- add in a blank index 0 to avoid having to alter the instruction indices
-              in findCrates . transpose
+parseCrates = let sanitizeStack = reverse . trim . init
+                  findStack num = fmap sanitizeStack . find (\crate -> last crate == num)
+                  findStacks x = map (fromMaybe "" . (`findStack` x)) ['0'..'9'] -- add in a blank index 0 to avoid having to alter the instruction indices
+              in findStacks . transpose
 
 parseInput :: String -> (Crates, [Instruction])
 parseInput =
