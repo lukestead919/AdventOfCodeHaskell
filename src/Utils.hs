@@ -4,14 +4,14 @@ module Utils
     toPair,
     replace,
     trim,
-    windows
+    windows,
+    takeUntil,
   )
 where
-  
-import Control.Applicative
-import Data.Traversable()
+
 import Data.Char (isSpace)
 import Data.List (tails, transpose)
+import Data.Traversable ()
 import System.IO
 import System.TimeIt
 
@@ -45,3 +45,9 @@ trim = takeWhile (not . isSpace) . dropWhile isSpace
 
 windows :: Int -> [a] -> [[a]]
 windows m = transpose . take m . tails
+
+takeUntil :: (a -> Bool) -> [a] -> [a]
+takeUntil _ [] = []
+takeUntil f (x : xs)
+  | f x = x : takeUntil f xs
+  | otherwise = [x]
