@@ -22,8 +22,8 @@ directionAsPoint d = case d of
                       D -> (0, -1)
 
 applyDirection :: Direction -> Rope -> Rope
-applyDirection d rope = let newH = head rope `add` directionAsPoint d
-                            newRope = newH:tail rope
+applyDirection d rope = let newHead = head rope `add` directionAsPoint d
+                            newRope = newHead:tail rope
                          in scanl1 moveTailIfNecessary newRope
 
 moveTailIfNecessary :: Point -> Point -> Point
