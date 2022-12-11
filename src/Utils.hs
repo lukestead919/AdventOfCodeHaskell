@@ -6,6 +6,7 @@ module Utils
     trim,
     windows,
     takeUntil,
+    slice,
   )
 where
 
@@ -51,3 +52,6 @@ takeUntil _ [] = []
 takeUntil f (x : xs)
   | f x = x : takeUntil f xs
   | otherwise = [x]
+
+slice :: Int -> Int -> [a] -> [a]
+slice begin end = take (end - begin) . drop begin
