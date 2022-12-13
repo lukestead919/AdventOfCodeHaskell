@@ -34,7 +34,7 @@ sumBy f = sum . map f
 
 toPair :: [a] -> (a, a)
 toPair [x, y] = (x, y)
-toPair _ = error "not a pair"
+toPair x = error ("not a pair, length = " ++ show (length x))
 
 replace :: Int -> a -> [a] -> [a]
 replace i e xs = case splitAt i xs of

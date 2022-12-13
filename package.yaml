@@ -24,6 +24,7 @@ dependencies:
   - split
   - timeit
   - containers
+  - text
 
 ghc-options:
   - -Wall
