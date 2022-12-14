@@ -7,6 +7,7 @@ module Utils
     windows,
     takeUntil,
     slice,
+    zipWithNext,
   )
 where
 
@@ -55,3 +56,6 @@ takeUntil f (x : xs)
 
 slice :: Int -> Int -> [a] -> [a]
 slice begin end = take (end - begin) . drop begin
+
+zipWithNext :: [a] -> [(a, a)]
+zipWithNext x = zip x (tail x)

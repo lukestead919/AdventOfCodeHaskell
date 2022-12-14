@@ -6,7 +6,8 @@ module Grid
     inGrid,
     gridValue,
     findValue,
-    replaceInGrid
+    replaceInGrid,
+    getPointsBetween
   )
 where
 
@@ -38,3 +39,11 @@ findValue grid a = let found = map (elemIndex a) grid
                     
 replaceInGrid :: (Eq a) => a -> a -> Grid a -> Grid a
 replaceInGrid a b = map (map (\c -> if a==c then b else c))
+
+getPointsBetween :: Point -> Point -> [Point]
+getPointsBetween (x1, y1) (x2, y2) = 
+  [(x, y) | x <- [xMin..xMax], y <- [yMin..yMax]]
+  where xMax = max x1 x2
+        xMin = min x1 x2
+        yMin = min y1 y2
+        yMax = max y1 y2
