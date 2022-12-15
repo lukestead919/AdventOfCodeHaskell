@@ -1,17 +1,18 @@
-import Data.List (delete)
-import qualified Data.Set as Set
 import Data.Char (isNumber, isSpace)
-import Utils
+import Data.List (nub)
 import Grid
+import Utils
 
 type Sensor = Point
+
 type Beacon = Point
+
 type Signal = (Sensor, Int)
 
 parseInput :: String -> [(Sensor, Beacon)]
 parseInput =
   let parseCoords [a, b, x, y] = ((a, b), (x, y))
-   in map (parseCoords . map read . words . filter (\c -> isNumber c || isSpace c || c=='-')) . lines
+   in map (parseCoords . map read . words . filter (\c -> isNumber c || isSpace c || c == '-')) . lines
 
 signal :: Sensor -> Beacon -> Signal
 signal s b = (s, manhattanDistance s b)
@@ -22,21 +23,21 @@ isOutsideSignal (sensor, distance) p = manhattanDistance sensor p > distance
 canContainBeacon :: [Signal] -> Point -> Bool
 canContainBeacon signals p = all (`isOutsideSignal` p) signals
 
-outerLayer :: Signal -> Set.Set Point
-outerLayer ((x, y), d) = Set.fromList . filter inRange . concatMap (\dist -> [(x + dist, y+d-dist), (x+dist, y-d+dist)]) $ [(-d-1)..(d+1)]
+outerLayer :: Signal -> [Point]
+outerLayer ((x, y), d) =
+  let range = d + 1
+   in concatMap
+        ( \xDel ->
+            let yDel = range - xDel
+             in [(x + xDel, y + yDel), (x + xDel, y - yDel)]
+        )
+        [- range .. range]
 
 inRange :: Point -> Bool
 inRange (x, y) = 0 <= x && x <= 4000000 && 0 <= y && y <= 4000000
 
-neighbours' :: Point -> [Point]
-neighbours' (x, y) = [(x+1, y), (x-1, y), (x, y+1), (x, y-1)]
-
 possiblePoints :: [Signal] -> [Point]
-possiblePoints signals =
-  let layers = map outerLayer signals
-      intersections = [a `Set.intersection` b | a <- layers, b <- delete a layers]
-   in concatMap neighbours' . Set.toList . Set.unions $ intersections
--- To investigate: why do I need to get the neighbours :cry:
+possiblePoints = filter inRange . concatMap outerLayer
 
 part1 :: String -> Int
 part1 input =
@@ -50,8 +51,7 @@ part1 input =
 part2 :: String -> Int
 part2 input =
   let signals = map (uncurry signal) . parseInput $ input
-      possPoints = possiblePoints signals
-      (x, y) = head . filter (canContainBeacon signals) $ possPoints
+      (x, y) = head . filter (canContainBeacon signals) . possiblePoints $ signals
    in 4000000 * x + y
 
 main :: IO ()
