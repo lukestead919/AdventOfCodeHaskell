@@ -25,6 +25,7 @@ dependencies:
   - timeit
   - containers
   - text
+  - PSQueue >= 1.1.1
 
 ghc-options:
   - -Wall

@@ -30,7 +30,7 @@ resolver:
 #   - auto-update
 #   - wai
 packages:
-- .
+  - .
 # Dependency packages to be pulled from upstream that are not in the resolver.
 # These entries can reference officially published versions as well as
 # forks / in-progress versions pinned to a git hash. For example:
@@ -42,6 +42,7 @@ packages:
 #
 extra-deps:
   - split-0.2.3.5
+  - PSQueue-1.1.1@sha256:6a047401f39a437c6cf4f866fb9b8f4b53b465bc12ae78c91e5026a653794509,1500
 
 # Override default flag values for local packages and extra-deps
 # flags: {}
