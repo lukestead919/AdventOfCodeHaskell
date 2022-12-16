@@ -1,5 +1,4 @@
 import Data.Char (isNumber, isSpace)
-import Data.List (nub)
 import Grid
 import Utils
 
@@ -37,7 +36,8 @@ inRange :: Point -> Bool
 inRange (x, y) = 0 <= x && x <= 4000000 && 0 <= y && y <= 4000000
 
 possiblePoints :: [Signal] -> [Point]
-possiblePoints = filter inRange . concatMap outerLayer
+possiblePoints = filter inRange . concatMap outerLayer . reverse
+--5/23 is good
 
 part1 :: String -> Int
 part1 input =
@@ -45,7 +45,9 @@ part1 input =
       sensorsAndBeacons = parseInput input
       beacons = map snd sensorsAndBeacons
       signals = map (uncurry signal) sensorsAndBeacons
-      points = map (, yVal) [-4044141..4044141*3]
+      xMin = minimum . map (\((x,_), d) -> x-d) $ signals
+      xMax = maximum . map (\((x,_), d) -> x+d) $ signals
+      points = map (, yVal) [xMin..xMax]
    in length . filter (`notElem` beacons) . filter (not . canContainBeacon signals) $ points
 
 part2 :: String -> Int
