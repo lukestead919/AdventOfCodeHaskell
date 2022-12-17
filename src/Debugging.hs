@@ -8,10 +8,10 @@ import Debug.Trace (traceShow)
 import GHC.IO.Unsafe (unsafePerformIO)
 
 {-# NOINLINE traceLns #-}
-traceLns :: String -> a -> a
-traceLns string expr =
+traceLns :: (Show a) => a -> b -> b
+traceLns ln expr =
   unsafePerformIO $ do
-    putStrLn string
+    putStrLn $ show ln
     return expr
 
 traceShowIf :: (Show a) => Bool -> a -> b -> b

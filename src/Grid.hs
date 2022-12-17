@@ -8,7 +8,10 @@ module Grid
     findValue,
     replaceInGrid,
     getPointsBetween,
-    manhattanDistance
+    manhattanDistance,
+    add,
+    addX,
+    addY
   )
 where
 
@@ -48,6 +51,15 @@ getPointsBetween (x1, y1) (x2, y2) =
         xMin = min x1 x2
         yMin = min y1 y2
         yMax = max y1 y2
+        
+add :: Int -> Int -> Point -> Point
+add x y (a, b) = (a+x, b+y)
+
+addX :: Int -> Point -> Point
+addX = flip add 0
+
+addY :: Int -> Point -> Point
+addY = add 0 
 
 manhattanDistance :: Point -> Point -> Int
 manhattanDistance (x1, y1) (x2, y2) = abs (x2 - x1) + abs (y2 - y1) 
