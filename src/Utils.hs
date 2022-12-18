@@ -8,6 +8,7 @@ module Utils
     takeUntil,
     slice,
     zipWithNext,
+    pairs,
   )
 where
 
@@ -59,3 +60,6 @@ slice begin end = take (end - begin) . drop begin
 
 zipWithNext :: [a] -> [(a, a)]
 zipWithNext x = zip x (tail x)
+
+pairs :: [a] -> [(a, a)]
+pairs l = [(x, y) | (x : ys) <- tails l, y <- ys]
