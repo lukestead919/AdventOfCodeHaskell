@@ -9,6 +9,8 @@ module Utils
     slice,
     zipWithNext,
     pairs,
+    mapWithIndex,
+    iterateTimes,
   )
 where
 
@@ -63,3 +65,9 @@ zipWithNext x = zip x (tail x)
 
 pairs :: [a] -> [(a, a)]
 pairs l = [(x, y) | (x : ys) <- tails l, y <- ys]
+
+mapWithIndex :: (Int -> a -> b) -> [a] -> [b]
+mapWithIndex f = zipWith f [0..]
+
+iterateTimes :: Int -> (a -> a) -> a -> a
+iterateTimes times f x = (!! times) $ iterate f x
