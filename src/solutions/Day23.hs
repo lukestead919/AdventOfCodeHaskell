@@ -1,9 +1,6 @@
-import Data.List (delete, find, elemIndices, foldl', sort)
-import Data.List.Split
+import Data.List (elemIndices)
 import qualified Data.Map as M
 import qualified Data.Set as S
-import Data.Maybe
-import Debugging
 import Grid
 import Utils
 
