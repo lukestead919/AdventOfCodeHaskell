@@ -52,7 +52,7 @@ getDirectionsForTurn :: Int -> [Direction]
 getDirectionsForTurn turnNum = take 4 . drop turnNum . cycle $ [N, S, W, E]
 
 parseInput :: String -> Elves
-parseInput = S.fromList . concat . mapWithIndex (\idx row -> map (, idx) ('#' `elemIndices` row)) . lines
+parseInput = S.fromList . concat . mapWithIndex (\rowIndex row -> map (, rowIndex) ('#' `elemIndices` row)) . lines
 
 getProposedMoves :: State -> ProposedMoves
 getProposedMoves State { elves, turn } = proposed
@@ -68,11 +68,11 @@ getProposedMoves State { elves, turn } = proposed
     proposed = M.fromSet proposedMoveForElf elves
 
 makeProposedMoves :: ProposedMoves -> Elves
-makeProposedMoves proposed = moves
+makeProposedMoves proposedMoves = moves
   where
-    numberMovingToSpace = countElements $ M.elems proposed
+    numberMovingToSpace = countElements $ M.elems proposedMoves
     actualMove (orig, proposed) = if M.findWithDefault 1 proposed numberMovingToSpace > 1 then orig else proposed
-    moves = S.fromList . map actualMove . M.toList $ proposed
+    moves = S.fromList . map actualMove . M.toList $ proposedMoves
 
 moveElves :: State -> State
 moveElves state@State {elves, turn} = newState
@@ -89,11 +89,12 @@ bounds points = ((minX, minY), (maxX, maxY))
     minY = minimum . map snd $ points
     maxY = maximum . map snd $ points
 
+part1 :: String -> Int
 part1 input = answer
   where
     startElves = parseInput input
     state = State {elves=startElves, turn=0, done=False}
-    movedElves = S.toList $ elves $ iterateTimes 10 moveElves state
+    movedElves = S.toList . elves . iterateTimes 10 moveElves $ state
     answer = (length . uncurry getPointsBetween . bounds $ movedElves) - length movedElves
 
 part2 :: String -> Int
