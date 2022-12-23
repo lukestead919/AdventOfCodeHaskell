@@ -18,6 +18,9 @@ data Direction = N | NE | E | SE | S | SW | W | NW deriving (Show, Eq, Enum, Bou
 allDirections :: [Direction]
 allDirections = [minBound..maxBound]
 
+allDirectionsSet :: S.Set Direction
+allDirectionsSet = S.fromList allDirections
+
 next :: (Bounded a, Eq a, Enum a) => a -> a
 next a
   | a == maxBound = minBound
@@ -57,17 +60,17 @@ getProposedMoves State { elves, turn } = proposed
     directions = getDirectionsForTurn turn
     proposedMoveForElf elf = move
       where
-        neighbourInDirection = M.fromSet (\d -> moveInDirection d elf `S.member` elves) (S.fromList allDirections)
+        neighbourInDirection = M.fromSet (\d -> moveInDirection d elf `S.member` elves) allDirectionsSet
         noNeighboursInDirections = not . any (\d -> M.findWithDefault False d neighbourInDirection)
         noNeighbours = noNeighboursInDirections allDirections
         validDirections = filter (noNeighboursInDirections . withAdjacentDirections) directions
         move = if noNeighbours || null validDirections then elf else moveInDirection (head validDirections) elf
-    proposed = M.fromList . map (\elf -> (elf, proposedMoveForElf elf)) . S.elems $ elves
+    proposed = M.fromSet proposedMoveForElf elves
 
 makeProposedMoves :: ProposedMoves -> Elves
 makeProposedMoves proposed = moves
   where
-    numberMovingToSpace = M.fromListWith (+) . flip zip (repeat 1) $ M.elems proposed
+    numberMovingToSpace = countElements $ M.elems proposed
     actualMove (orig, proposed) = if M.findWithDefault 1 proposed numberMovingToSpace > 1 then orig else proposed
     moves = S.fromList . map actualMove . M.toList $ proposed
 
@@ -92,7 +95,6 @@ part1 input = answer
     state = State {elves=startElves, turn=0, done=False}
     movedElves = S.toList $ elves $ iterateTimes 10 moveElves state
     answer = (length . uncurry getPointsBetween . bounds $ movedElves) - length movedElves
---    answer = movedElves
 
 part2 :: String -> Int
 part2 input = answer

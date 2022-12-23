@@ -11,11 +11,13 @@ module Utils
     pairs,
     mapWithIndex,
     iterateTimes,
+    countElements,
   )
 where
 
 import Data.Char (isSpace)
 import Data.List (tails, transpose)
+import qualified Data.Map as M
 import Data.Traversable ()
 import System.IO
 import System.TimeIt
@@ -71,3 +73,6 @@ mapWithIndex f = zipWith f [0..]
 
 iterateTimes :: Int -> (a -> a) -> a -> a
 iterateTimes times f x = (!! times) $ iterate f x
+
+countElements :: Ord a => [a] -> M.Map a Int
+countElements = M.fromListWith (+) . flip zip (repeat 1)
