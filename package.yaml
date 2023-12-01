@@ -26,6 +26,7 @@ dependencies:
   - containers
   - text
   - PSQueue >= 1.1.1
+  - MissingH
 
 ghc-options:
   - -Wall

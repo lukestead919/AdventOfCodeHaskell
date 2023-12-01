@@ -1,5 +1,6 @@
 module Debugging
-  ( traceLns,
+  ( trace,
+    traceLns,
     traceShowIf,
   )
 where
@@ -13,6 +14,12 @@ traceLns ln expr =
   unsafePerformIO $ do
     putStrLn $ show ln
     return expr
+
+trace :: (Show a) => a -> a
+trace ln =
+  unsafePerformIO $ do
+    putStrLn $ show ln
+    return ln
 
 traceShowIf :: (Show a) => Bool -> a -> b -> b
 traceShowIf predicate showable rest =

@@ -35,7 +35,8 @@ library
       src
   ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints
   build-depends:
-      PSQueue >=1.1.1
+      MissingH
+    , PSQueue >=1.1.1
     , base >=4.7 && <5
     , containers
     , split
@@ -52,6 +53,7 @@ executable AdventOfCodeHaskell-exe
   ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       AdventOfCodeHaskell
+    , MissingH
     , PSQueue >=1.1.1
     , base >=4.7 && <5
     , containers
@@ -70,6 +72,7 @@ test-suite AdventOfCodeHaskell-test
   ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       AdventOfCodeHaskell
+    , MissingH
     , PSQueue >=1.1.1
     , base >=4.7 && <5
     , containers
