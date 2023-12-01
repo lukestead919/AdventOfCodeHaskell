@@ -1,1 +1,1 @@
-# AdventOfCode2022
+# AdventOfCodeHaskell
