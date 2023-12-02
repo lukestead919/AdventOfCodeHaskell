@@ -16,7 +16,7 @@ module Utils
 where
 
 import Data.Char (isSpace)
-import Data.List (tails, transpose)
+import Data.List (tails, transpose, dropWhileEnd)
 import qualified Data.Map as M
 import Data.Traversable ()
 import System.IO
@@ -48,7 +48,7 @@ replace i e xs = case splitAt i xs of
   _ -> xs
 
 trim :: String -> String
-trim = takeWhile (not . isSpace) . dropWhile isSpace
+trim = dropWhileEnd isSpace . dropWhile isSpace
 
 windows :: Int -> [a] -> [[a]]
 windows m = transpose . take m . tails
